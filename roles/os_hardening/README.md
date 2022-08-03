@@ -362,6 +362,21 @@ We know that this is the case on Raspberry Pi.
 - `os_mnt_run_filesystem`
   - Default: `ext4`
   - Description: Configure file system for fstab entry /run
+- `os_mnt_tmp_dir_mode`
+  - Default: `1777`
+  - Description: Set default perimissions for /tmp
+- `os_mnt_tmp_enabled`
+  - Default: `false`
+  - Description: Set to false to ignore /tmp mountpoint
+- `os_mnt_tmp_src`
+  - Default: `tmpfs`
+  - Description: Set mount source for /tmp
+- `os_mnt_tmp_options`
+  - Default: `rw,nosuid,nodev,noexec`
+  - Description: Configure mount options for /tmp
+- `os_mnt_tmp_filesystem`
+  - Default: `tmpfs`
+  - Description: Configure file system for fstab entry /run
 - `os_mnt_var_dir_mode`
   - Default: `0755`
   - Description: Set default perimissions for /var

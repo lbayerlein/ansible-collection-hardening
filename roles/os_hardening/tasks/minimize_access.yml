@@ -237,6 +237,22 @@
     - var_log_audit_exists.stat.exists | bool
     - os_auditd_enabled | bool
 
+- name: Mount /tmp with hardened options
+  mount:
+    path: /tmp
+    src: '{{ os_mnt_tmp_src }}'
+    fstype: '{{ os_mnt_tmp_filesystem }}'
+    opts: '{{ os_mnt_tmp_options }}'
+    state: present
+  register: tmpmount
+  when: os_mnt_tmp_enabled | bool
+
+- name: Harden permissions for /tmp directory
+  file:
+    dest: /tmp
+    owner: 'root'
+    group: 'root'
+
 - name: Mount /var/tmp with hardened options
   mount:
     path: /var/tmp
@@ -271,4 +287,5 @@
     - { path: '/var', src: '{{ os_mnt_var_src }}', fstype: '{{ os_mnt_var_filesystem }}', opts: '{{ os_mnt_var_options }}', when: "{{ varmount.changed }}" }
     - { path: '/var/log', src: '{{ os_mnt_var_log_src }}', fstype: '{{ os_mnt_var_log_filesystem }}', opts: '{{ os_mnt_var_log_options }}', when: "{{ varlogmount.changed }}" }
     - { path: '/var/log/audit', src: '{{ os_mnt_var_log_audit_src }}', fstype: '{{ os_mnt_var_log_audit_filesystem }}', opts: '{{ os_mnt_var_log_audit_options }}', when: "{{ varlogauditmount.changed }}" }
+    - { path: '/tmp', src: '{{ os_mnt_tmp_src }}', fstype: '{{ os_mnt_tmp_filesystem }}', opts: '{{ os_mnt_tmp_options }}', when: "{{ tmpmount.changed }}" }
     - { path: '/var/tmp', src: '{{ os_mnt_var_tmp_src }}', fstype: '{{ os_mnt_var_tmp_filesystem }}', opts: '{{ os_mnt_var_tmp_options }}', when: "{{ vartmpmount.changed }}" }
